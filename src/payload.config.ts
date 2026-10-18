@@ -57,10 +57,16 @@ export default buildConfig({
       connectionString: process.env.DATABASE_URI || 'postgresql://postgres:postgres@127.0.0.1:5432/doctor_portfolio',
       max: 20,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 5000,
+      connectionTimeoutMillis: 10000,
+      ssl:
+        process.env.DATABASE_URI?.includes('supabase') ||
+        process.env.DATABASE_URI?.includes('neon') ||
+        process.env.NODE_ENV === 'production'
+          ? { rejectUnauthorized: false }
+          : undefined,
     },
     migrationDir: path.resolve(dirname, 'migrations'),
-    push: false,
+    push: true,
   }),
   localization: {
     locales: [

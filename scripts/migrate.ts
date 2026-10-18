@@ -15,7 +15,8 @@ if (!connectionString) {
 
 const pool = new pg.Pool({
   connectionString,
-  connectionTimeoutMillis: 5000,
+  connectionTimeoutMillis: 10000,
+  ssl: { rejectUnauthorized: false },
 });
 
 async function runMigrations() {
