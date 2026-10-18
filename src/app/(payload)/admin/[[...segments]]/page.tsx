@@ -1,6 +1,7 @@
 /* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 import config from '@payload-config';
 import { RootPage, generatePageMetadata } from '@payloadcms/next/views';
+import { importMap } from '../importMap';
 
 type Args = {
   params: Promise<{
@@ -23,7 +24,7 @@ const Page = async ({ params, searchParams }: Args) => {
     config,
     params: params as any,
     searchParams: (searchParams ?? Promise.resolve({})) as any,
-    importMap: {},
+    importMap,
   });
 };
 
