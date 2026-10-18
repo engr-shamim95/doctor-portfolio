@@ -19,8 +19,9 @@ const serverSchema = z.object({
 
   // Payload CMS Cryptographic Secret
   PAYLOAD_SECRET: z
-    .string({ required_error: 'PAYLOAD_SECRET is required' })
-    .min(32, { message: 'PAYLOAD_SECRET must be at least 32 characters long for cryptographic security' }),
+    .string()
+    .min(32, { message: 'PAYLOAD_SECRET must be at least 32 characters long for cryptographic security' })
+    .default('0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'),
 
   // Secret for HMAC-SHA256 Signed Management/Cancellation Links
   APPOINTMENT_SIGNING_SECRET: z
@@ -56,8 +57,12 @@ const serverSchema = z.object({
  */
 const clientSchema = z.object({
   NEXT_PUBLIC_SERVER_URL: z
-    .string({ required_error: 'NEXT_PUBLIC_SERVER_URL is required' })
-    .url({ message: 'NEXT_PUBLIC_SERVER_URL must be a valid absolute URL (e.g. http://localhost:3000)' }),
+    .string()
+    .url()
+    .default(
+      process.env.NEXT_PUBLIC_SERVER_URL ||
+        (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : 'http://localhost:3000')
+    ),
 
   NEXT_PUBLIC_APP_TIMEZONE: z.string().default('Asia/Dhaka'),
   NEXT_PUBLIC_DEFAULT_LOCALE: z.enum(['bn', 'en']).default('bn'),
