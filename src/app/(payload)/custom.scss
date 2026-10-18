@@ -1,0 +1,12 @@
+// src/app/(payload)/custom.scss
+// Admin portal custom styling and typography adjustments
+:root {
+  --theme-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+// Enhance visibility of audit logs and status badges
+.collection-list--audit-logs {
+  .cell-action {
+    font-weight: 600;
+  }
+}
