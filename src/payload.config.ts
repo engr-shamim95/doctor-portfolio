@@ -66,7 +66,7 @@ export default buildConfig({
           : undefined,
     },
     migrationDir: path.resolve(dirname, 'migrations'),
-    push: true,
+    push: false,
   }),
   localization: {
     locales: [
