@@ -8,6 +8,7 @@ export const AuditLogs: CollectionConfig = {
     useAsTitle: 'action',
     defaultColumns: ['action', 'collectionName', 'documentId', 'user', 'userRole', 'timestamp'],
     description: 'Immutable forensic audit trail tracking system mutations and administrative actions.',
+    group: 'Administration',
   },
   access: {
     read: isSuperAdminOrDoctor,

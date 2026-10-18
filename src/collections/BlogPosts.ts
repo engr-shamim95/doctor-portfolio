@@ -8,6 +8,7 @@ export const BlogPosts: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'readingTime', 'isPublished', 'publishedAt'],
+    group: 'Content & Website',
   },
   access: {
     read: () => true,

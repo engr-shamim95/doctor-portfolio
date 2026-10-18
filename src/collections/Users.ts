@@ -81,6 +81,7 @@ export const Users: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'email', 'role', 'phone', 'isActive'],
+    group: 'Administration',
   },
   access: {
     admin: ({ req: { user } }) => Boolean(user && (user as { isActive?: boolean }).isActive),

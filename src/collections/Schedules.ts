@@ -8,6 +8,7 @@ export const Schedules: CollectionConfig = {
   admin: {
     useAsTitle: 'id',
     defaultColumns: ['chamber', 'weekday', 'startTime', 'endTime', 'isActive'],
+    group: 'Appointments & Patients',
   },
   access: {
     read: () => true,

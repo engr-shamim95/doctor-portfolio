@@ -26,9 +26,12 @@ const dirname = path.dirname(filename);
 export default buildConfig({
   admin: {
     user: Users.slug,
+    theme: 'all',
+    suppressHydrationWarning: true,
     meta: {
       titleSuffix: ' | Dr. Specialized Clinical Care',
     },
+    dateFormat: 'yyyy-MM-dd HH:mm',
   },
   collections: [
     Users,

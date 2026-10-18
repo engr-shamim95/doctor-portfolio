@@ -8,6 +8,7 @@ export const Appointments: CollectionConfig = {
   admin: {
     useAsTitle: 'referenceCode',
     defaultColumns: ['referenceCode', 'patientName', 'date', 'slotStart', 'serialNumber', 'status'],
+    group: 'Appointments & Patients',
   },
   access: {
     read: hasRole('super-admin', 'doctor', 'assistant'),

@@ -8,6 +8,7 @@ export const Chambers: CollectionConfig = {
   admin: {
     useAsTitle: 'name',
     defaultColumns: ['name', 'city', 'bookingMode', 'isActive'],
+    group: 'Appointments & Patients',
   },
   access: {
     read: () => true, // Publicly readable for appointment booking

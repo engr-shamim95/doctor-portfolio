@@ -5,6 +5,9 @@ import { isSuperAdminOrDoctor } from '../lib/auth';
 export const DoctorProfile: GlobalConfig = {
   slug: 'doctor-profile',
   label: 'Doctor Profile & Credentials',
+  admin: {
+    group: 'Clinical Practice',
+  },
   access: {
     read: () => true,
     update: isSuperAdminOrDoctor,

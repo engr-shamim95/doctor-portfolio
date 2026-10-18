@@ -8,6 +8,7 @@ export const Leaves: CollectionConfig = {
   admin: {
     useAsTitle: 'reason',
     defaultColumns: ['chamber', 'startDate', 'endDate', 'isAllDay', 'reason'],
+    group: 'Appointments & Patients',
   },
   access: {
     read: () => true,

@@ -8,6 +8,7 @@ export const Services: CollectionConfig = {
   admin: {
     useAsTitle: 'title',
     defaultColumns: ['title', 'slug', 'isPublished', 'order'],
+    group: 'Clinical Practice',
   },
   access: {
     read: () => true,

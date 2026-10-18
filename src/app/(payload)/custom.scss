@@ -1,12 +1,129 @@
 // src/app/(payload)/custom.scss
-// Admin portal custom styling and typography adjustments
+// Doctor Care Admin Portal - Professional Sidebar Navigation & Theme Enhancements
+
 :root {
   --theme-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --medical-teal: #0d9488;
+  --medical-teal-light: #14b8a6;
+  --medical-teal-glow: rgba(13, 148, 136, 0.15);
 }
 
-// Enhance visibility of audit logs and status badges
+// Navigation Sidebar Structure & Aesthetics
+.nav {
+  font-family: var(--theme-font);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+
+  .nav__header {
+    padding-bottom: 12px;
+    margin-bottom: 16px;
+    border-bottom: 1px solid var(--theme-elevation-100);
+  }
+
+  // Sidebar Group Headings
+  .nav-group {
+    margin-bottom: 18px;
+
+    .nav-group__toggle {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 700;
+      color: var(--theme-elevation-500);
+      padding: 4px 0;
+      transition: color 0.15s ease;
+
+      &:hover {
+        color: var(--medical-teal);
+      }
+    }
+
+    // Active & Nav Links inside groups
+    .nav__link {
+      border-radius: 6px;
+      padding: 6px 10px;
+      margin: 2px 0;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--theme-elevation-700);
+      transition: all 0.15s ease;
+
+      &:hover {
+        background-color: var(--theme-elevation-50);
+        color: var(--theme-elevation-1000);
+        text-decoration: none;
+      }
+
+      &.active,
+      &:has(.nav__link-indicator) {
+        background-color: var(--medical-teal-glow);
+        color: var(--medical-teal);
+        font-weight: 600;
+
+        .nav__link-indicator {
+          background-color: var(--medical-teal);
+          width: 3px;
+          border-radius: 3px;
+        }
+      }
+    }
+  }
+}
+
+// Dark Mode Polish
+html[data-theme='dark'] {
+  --medical-teal-glow: rgba(20, 184, 166, 0.2);
+
+  .nav {
+    background-color: #0b1120;
+    border-right-color: #1e293b;
+
+    .nav__header {
+      border-bottom-color: #1e293b;
+    }
+
+    .nav-group .nav-group__toggle {
+      color: #94a3b8;
+
+      &:hover {
+        color: #2dd4bf;
+      }
+    }
+
+    .nav-group .nav__link {
+      color: #cbd5e1;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+        color: #ffffff;
+      }
+
+      &.active,
+      &:has(.nav__link-indicator) {
+        background-color: rgba(20, 184, 166, 0.18);
+        color: #2dd4bf;
+
+        .nav__link-indicator {
+          background-color: #2dd4bf;
+        }
+      }
+    }
+  }
+
+  // Polish tables in dark mode
+  .table {
+    border-color: #1e293b;
+  }
+}
+
+// Collection List & Badges Enhancement
 .collection-list--audit-logs {
   .cell-action {
+    font-weight: 600;
+  }
+}
+
+.collection-list--appointments {
+  .cell-status {
     font-weight: 600;
   }
 }

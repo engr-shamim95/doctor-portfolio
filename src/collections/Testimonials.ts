@@ -8,6 +8,7 @@ export const Testimonials: CollectionConfig = {
   admin: {
     useAsTitle: 'patientName',
     defaultColumns: ['patientName', 'rating', 'status'],
+    group: 'Content & Website',
   },
   access: {
     read: () => true,

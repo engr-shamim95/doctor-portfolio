@@ -5,6 +5,9 @@ import { isSuperAdminOrDoctor } from '../lib/auth';
 export const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
   label: 'Site Settings & Emergency Hotline',
+  admin: {
+    group: 'Content & Website',
+  },
   access: {
     read: () => true,
     update: isSuperAdminOrDoctor,

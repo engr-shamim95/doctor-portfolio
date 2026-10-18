@@ -49,6 +49,7 @@ export const Media: CollectionConfig = {
   admin: {
     useAsTitle: 'alt',
     defaultColumns: ['filename', 'alt', 'mimeType', 'filesize', 'updatedAt'],
+    group: 'Content & Website',
   },
   access: {
     read: () => true, // Publicly readable for frontend presentation
