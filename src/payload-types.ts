@@ -70,6 +70,14 @@ export interface Config {
     users: User;
     media: Media;
     'audit-logs': AuditLog;
+    chambers: Chamber;
+    schedules: Schedule;
+    leaves: Leaf;
+    appointments: Appointment;
+    services: Service;
+    'blog-posts': BlogPost;
+    testimonials: Testimonial;
+    faqs: Faq;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -80,6 +88,14 @@ export interface Config {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     'audit-logs': AuditLogsSelect<false> | AuditLogsSelect<true>;
+    chambers: ChambersSelect<false> | ChambersSelect<true>;
+    schedules: SchedulesSelect<false> | SchedulesSelect<true>;
+    leaves: LeavesSelect<false> | LeavesSelect<true>;
+    appointments: AppointmentsSelect<false> | AppointmentsSelect<true>;
+    services: ServicesSelect<false> | ServicesSelect<true>;
+    'blog-posts': BlogPostsSelect<false> | BlogPostsSelect<true>;
+    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    faqs: FaqsSelect<false> | FaqsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -131,9 +147,9 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: number;
-  name: string;
+  name?: string | null;
   role: 'super-admin' | 'doctor' | 'assistant';
-  phone: string;
+  phone?: string | null;
   isActive?: boolean | null;
   notes?: string | null;
   updatedAt: string;
@@ -240,6 +256,164 @@ export interface AuditLog {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chambers".
+ */
+export interface Chamber {
+  id: number;
+  name: string;
+  address: string;
+  city: string;
+  phone: string;
+  bookingMode: 'SLOT' | 'SERIAL';
+  startTime: string;
+  endTime: string;
+  slotDurationMinutes: number;
+  maxPatients: number;
+  mapUrl?: string | null;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedules".
+ */
+export interface Schedule {
+  id: number;
+  chamber: number | Chamber;
+  weekday: '0' | '1' | '2' | '3' | '4' | '5' | '6';
+  startTime: string;
+  endTime: string;
+  maxPatients: number;
+  slotDurationMinutes: number;
+  isActive?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leaves".
+ */
+export interface Leaf {
+  id: number;
+  chamber?: (number | null) | Chamber;
+  startDate: string;
+  endDate: string;
+  isAllDay?: boolean | null;
+  reason: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointments".
+ */
+export interface Appointment {
+  id: number;
+  referenceCode: string;
+  chamber: number | Chamber;
+  date: string;
+  slotStart?: string | null;
+  slotEnd?: string | null;
+  serialNumber?: number | null;
+  bookingMode: 'SLOT' | 'SERIAL';
+  patientName: string;
+  patientPhone: string;
+  patientEmail?: string | null;
+  status: 'PENDING' | 'CONFIRMED' | 'COMPLETED' | 'CANCELLED' | 'NO_SHOW';
+  source?: ('WEB' | 'ADMIN' | 'PHONE') | null;
+  notes?: string | null;
+  expiresAt?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services".
+ */
+export interface Service {
+  id: number;
+  title: string;
+  slug: string;
+  summary: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  order?: number | null;
+  isPublished?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts".
+ */
+export interface BlogPost {
+  id: number;
+  title: string;
+  slug: string;
+  excerpt: string;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  readingTime?: string | null;
+  publishedAt?: string | null;
+  isPublished?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials".
+ */
+export interface Testimonial {
+  id: number;
+  patientName: string;
+  feedback: string;
+  rating?: number | null;
+  status?: ('PENDING' | 'APPROVED' | 'HIDDEN') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs".
+ */
+export interface Faq {
+  id: number;
+  question: string;
+  answer: string;
+  category?: ('general' | 'booking' | 'fees') | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -273,6 +447,38 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'audit-logs';
         value: number | AuditLog;
+      } | null)
+    | ({
+        relationTo: 'chambers';
+        value: number | Chamber;
+      } | null)
+    | ({
+        relationTo: 'schedules';
+        value: number | Schedule;
+      } | null)
+    | ({
+        relationTo: 'leaves';
+        value: number | Leaf;
+      } | null)
+    | ({
+        relationTo: 'appointments';
+        value: number | Appointment;
+      } | null)
+    | ({
+        relationTo: 'services';
+        value: number | Service;
+      } | null)
+    | ({
+        relationTo: 'blog-posts';
+        value: number | BlogPost;
+      } | null)
+    | ({
+        relationTo: 'testimonials';
+        value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'faqs';
+        value: number | Faq;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -421,6 +627,128 @@ export interface AuditLogsSelect<T extends boolean = true> {
   userAgent?: T;
   diff?: T;
   timestamp?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "chambers_select".
+ */
+export interface ChambersSelect<T extends boolean = true> {
+  name?: T;
+  address?: T;
+  city?: T;
+  phone?: T;
+  bookingMode?: T;
+  startTime?: T;
+  endTime?: T;
+  slotDurationMinutes?: T;
+  maxPatients?: T;
+  mapUrl?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "schedules_select".
+ */
+export interface SchedulesSelect<T extends boolean = true> {
+  chamber?: T;
+  weekday?: T;
+  startTime?: T;
+  endTime?: T;
+  maxPatients?: T;
+  slotDurationMinutes?: T;
+  isActive?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "leaves_select".
+ */
+export interface LeavesSelect<T extends boolean = true> {
+  chamber?: T;
+  startDate?: T;
+  endDate?: T;
+  isAllDay?: T;
+  reason?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "appointments_select".
+ */
+export interface AppointmentsSelect<T extends boolean = true> {
+  referenceCode?: T;
+  chamber?: T;
+  date?: T;
+  slotStart?: T;
+  slotEnd?: T;
+  serialNumber?: T;
+  bookingMode?: T;
+  patientName?: T;
+  patientPhone?: T;
+  patientEmail?: T;
+  status?: T;
+  source?: T;
+  notes?: T;
+  expiresAt?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "services_select".
+ */
+export interface ServicesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  summary?: T;
+  content?: T;
+  order?: T;
+  isPublished?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "blog-posts_select".
+ */
+export interface BlogPostsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  excerpt?: T;
+  content?: T;
+  readingTime?: T;
+  publishedAt?: T;
+  isPublished?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  patientName?: T;
+  feedback?: T;
+  rating?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faqs_select".
+ */
+export interface FaqsSelect<T extends boolean = true> {
+  question?: T;
+  answer?: T;
+  category?: T;
+  order?: T;
   updatedAt?: T;
   createdAt?: T;
 }
