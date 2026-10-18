@@ -117,14 +117,14 @@ export const Users: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      required: true,
+      defaultValue: 'Admin User',
       label: 'Full Name',
     },
     {
       name: 'role',
       type: 'select',
       required: true,
-      defaultValue: 'assistant',
+      defaultValue: 'super-admin',
       options: [
         { label: 'Super Admin', value: 'super-admin' },
         { label: 'Doctor', value: 'doctor' },
@@ -138,9 +138,10 @@ export const Users: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
-      required: true,
+      defaultValue: '+8801700000000',
       label: 'Mobile Phone',
       validate: (value: unknown) => {
+        if (!value) return true;
         if (typeof value !== 'string') return 'Phone number must be a string';
         const regex = /^\+8801[3-9]\d{8}$/;
         if (!regex.test(value)) {
